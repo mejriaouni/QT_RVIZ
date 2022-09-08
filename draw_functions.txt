@@ -1,0 +1,171 @@
+void draw_box(int id=0,float x=0, float y=0 , float z=0, float ox=0, float oy=0, float oz=0, float ow=1,float sx=1,float sy=1, float sz=1 );
+    void draw_sphere(int id=0,float x=0, float y=0 , float z=0, float ox=0, float oy=0, float oz=0, float ow=1,float d=1 );
+    void draw_cylinder(int id=0,float x=0, float y=0 , float z=0, float ox=0, float oy=0, float oz=0, float ow=1,float d=1 ,float h=2);
+    
+    
+    
+    void MainWindow::draw_box(int id,float x, float y , float z, float ox, float oy, float oz, float ow ,float sx,float sy, float sz)
+{
+    uint32_t shape = 1;
+    if (ros::ok())
+    {
+    visualization_msgs::Marker marker;
+    // Set the frame ID and timestamp.  See the TF tutorials for information on these.
+    marker.header.frame_id = "map";
+    marker.header.stamp = ros::Time::now();
+
+    // Set the namespace and id for this marker.  This serves to create a unique ID
+    // Any marker sent with the same namespace and id will overwrite the old one
+    marker.ns = "basic_shapes";
+    marker.id = id;
+
+    // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
+    marker.type = shape;
+
+    // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
+    marker.action = visualization_msgs::Marker::ADD;
+
+    // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
+    marker.pose.position.x = x;
+    marker.pose.position.y = y;
+    marker.pose.position.z = z;
+    marker.pose.orientation.x = ox;
+    marker.pose.orientation.y = oy;
+    marker.pose.orientation.z = oz;
+    marker.pose.orientation.w = ow;
+
+    // Set the scale of the marker -- 1x1x1 here means 1m on a side
+    marker.scale.x = sx;
+    marker.scale.y = sy;
+    marker.scale.z = sz;
+
+    // Set the color -- be sure to set alpha to something non-zero!
+    marker.color.r = 1.0f;
+    marker.color.g = 0.0f;
+    marker.color.b = 0.0f;
+    marker.color.a = 0.50;
+
+    marker.lifetime = ros::Duration();
+    while (marker_pub.getNumSubscribers() < 1)
+    {
+      if (!ros::ok())
+      {
+        ROS_ERROR("ros not ok");
+      }
+      ROS_WARN("Please create a subscriber to the marker");
+      sleep(1);
+    }
+    marker_pub.publish(marker);
+    }
+}
+
+
+void MainWindow::draw_sphere(int id,float x, float y , float z, float ox, float oy, float oz, float ow ,float d)
+{
+    uint32_t shape = 2;
+    if (ros::ok())
+    {
+    visualization_msgs::Marker marker;
+    // Set the frame ID and timestamp.  See the TF tutorials for information on these.
+    marker.header.frame_id = "map";
+    marker.header.stamp = ros::Time::now();
+
+    // Set the namespace and id for this marker.  This serves to create a unique ID
+    // Any marker sent with the same namespace and id will overwrite the old one
+    marker.ns = "basic_shapes";
+    marker.id = id;
+
+    // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
+    marker.type = shape;
+
+    // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
+    marker.action = visualization_msgs::Marker::ADD;
+
+    // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
+    marker.pose.position.x = x;
+    marker.pose.position.y = y;
+    marker.pose.position.z = z;
+    marker.pose.orientation.x = ox;
+    marker.pose.orientation.y = oy;
+    marker.pose.orientation.z = oz;
+    marker.pose.orientation.w = ow;
+
+    // Set the scale of the marker -- 1x1x1 here means 1m on a side
+    marker.scale.x = d;
+    marker.scale.y = d;
+    marker.scale.z = d;
+
+    // Set the color -- be sure to set alpha to something non-zero!
+    marker.color.r = 1.0f;
+    marker.color.g = 0.0f;
+    marker.color.b = 0.0f;
+    marker.color.a = 1.0;
+
+    marker.lifetime = ros::Duration();
+    while (marker_pub.getNumSubscribers() < 1)
+    {
+      if (!ros::ok())
+      {
+        ROS_ERROR("ros not ok");
+      }
+      ROS_WARN("Please create a subscriber to the marker");
+      sleep(1);
+    }
+    marker_pub.publish(marker);
+    }
+}
+
+void MainWindow::draw_cylinder(int id,float x, float y , float z, float ox, float oy, float oz, float ow ,float d, float h)
+{
+    uint32_t shape = 3;
+    if (ros::ok())
+    {
+    visualization_msgs::Marker marker;
+    // Set the frame ID and timestamp.  See the TF tutorials for information on these.
+    marker.header.frame_id = "map";
+    marker.header.stamp = ros::Time::now();
+
+    // Set the namespace and id for this marker.  This serves to create a unique ID
+    // Any marker sent with the same namespace and id will overwrite the old one
+    marker.ns = "basic_shapes";
+    marker.id = id;
+
+    // Set the marker type.  Initially this is CUBE, and cycles between that and SPHERE, ARROW, and CYLINDER
+    marker.type = shape;
+
+    // Set the marker action.  Options are ADD, DELETE, and new in ROS Indigo: 3 (DELETEALL)
+    marker.action = visualization_msgs::Marker::ADD;
+
+    // Set the pose of the marker.  This is a full 6DOF pose relative to the frame/time specified in the header
+    marker.pose.position.x = x;
+    marker.pose.position.y = y;
+    marker.pose.position.z = z;
+    marker.pose.orientation.x = ox;
+    marker.pose.orientation.y = oy;
+    marker.pose.orientation.z = oz;
+    marker.pose.orientation.w = ow;
+
+    // Set the scale of the marker -- 1x1x1 here means 1m on a side
+    marker.scale.x = d;
+    marker.scale.y = d;
+    marker.scale.z = h;
+
+    // Set the color -- be sure to set alpha to something non-zero!
+    marker.color.r = 1.0f;
+    marker.color.g = 0.0f;
+    marker.color.b = 0.0f;
+    marker.color.a = 1.0;
+
+    marker.lifetime = ros::Duration();
+    while (marker_pub.getNumSubscribers() < 1)
+    {
+      if (!ros::ok())
+      {
+        ROS_ERROR("ros not ok");
+      }
+      ROS_WARN("Please create a subscriber to the marker");
+      sleep(1);
+    }
+    marker_pub.publish(marker);
+    }
+}
